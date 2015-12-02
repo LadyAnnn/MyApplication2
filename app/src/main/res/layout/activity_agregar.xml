@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="107dp"
+            android:layout_height="wrap_content"
+            android:text="Numero:"
+            android:id="@+id/Numerotext"
+            android:layout_weight="0.15"
+            android:textColor="#ff151cff"
+            android:textStyle="normal|bold"
+            android:textSize="25dp" />
+
+        <EditText
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/Telefonotext"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nombres:"
+            android:id="@+id/textView3"
+            android:layout_weight="0.15"
+            android:textColor="#ff151cff"
+            android:textStyle="normal|bold"
+            android:textSize="25dp" />
+
+        <EditText
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.05">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Apellidos:"
+            android:id="@+id/textView4"
+            android:textColor="#ff151cff"
+            android:textSize="25dp"
+            android:textStyle="normal|bold" />
+
+        <EditText
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText2"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="1"
+        android:layout_weight="0.15">
+
+        <TextView
+            android:layout_width="107dp"
+            android:layout_height="wrap_content"
+            android:text="Correo:"
+            android:id="@+id/textView5"
+            android:textColor="#ff151cff"
+            android:textSize="25dp"
+            android:textStyle="normal|bold" />
+
+        <EditText
+            android:layout_width="261dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText3"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.13">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Direccion:"
+            android:id="@+id/textView6"
+            android:textColor="#ff151cff"
+            android:textStyle="normal|bold"
+            android:textSize="25dp" />
+
+        <EditText
+            android:layout_width="272dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/editText4"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agregar"
+        android:id="@+id/button3"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.04"
+        android:onClick="agregar_clicked" />
+
+</LinearLayout>
