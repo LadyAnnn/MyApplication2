@@ -1,64 +1,128 @@
 package com.example.lady.myapplication;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
 
-public class MainActivity extends Activity {
+import com.example.lady.myapplication.adapter.AdapterPersonas;
+import com.example.lady.myapplication.entidades.Personas;
+
+import java.util.ArrayList;
+
+public class MainActivity extends Activity implements View.OnClickListener {
+    MyDB dbHandler;
+    FloatingActionButton floatingActionButton;
+    ListView listVieContact;
+    EditText editTextBuscar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.fabAgregar);
+        listVieContact = (ListView) findViewById(R.id.listViewcontactos);
+        editTextBuscar = (EditText) findViewById(R.id.buscaredit);
+        floatingActionButton.setOnClickListener(this);
+        dbHandler = new MyDB(this, null, null, 1);
+        displayListview();
+        buscarDisplay();
     }
 
-    public void onClick(View view){
+    private void buscarDisplay() {
+        editTextBuscar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        Intent i = new Intent(this, Agregar.class);
-        startActivity(i);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                displayListviewByText(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+    private void displayListviewByText(String text) {
+
+        ArrayList<Personas> personasList = dbHandler.getPersonasesByText(text);
+        AdapterPersonas adapterPersonas = new AdapterPersonas(this, 0, personasList);
+        listVieContact.setAdapter(adapterPersonas);
+        listVieContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Personas personas = (Personas) parent.getItemAtPosition(position);
+                dialogOpe(personas);
+            }
+        });
+
+
     }
 
-    public void onListar(View view){
-        Intent i = new Intent(this, BuscarPersona.class);
-        startActivity(i);
+    private void displayListview() {
+
+        ArrayList<Personas> personasList = dbHandler.getPersonases();
+        AdapterPersonas adapterPersonas = new AdapterPersonas(this, 0, personasList);
+        listVieContact.setAdapter(adapterPersonas);
+        listVieContact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Personas personas = (Personas) parent.getItemAtPosition(position);
+                dialogOpe(personas);
+            }
+        });
+
+
     }
 
-    public void onEliminar(View view){
-        Intent i = new Intent(this, Eliminar.class);
-        startActivity(i);
-    }
+    private void dialogOpe(final Personas personas) {
+        final EditText editText = new EditText(this);
+        String[] m1 = {"1. Modificar"};
+        String[] m2 = {"2. Eliminar"};
+        new AlertDialog.Builder(this)
+                .setTitle("¿Que desea hacer?")
+                .setMessage("Seleccione una opcion: \n 1.Modificar. \n 2.Eliminar")
+                .setView(editText)
 
-    public void premodificar(View view){
-        Intent i = new Intent(this, pre_Modificar.class);
-        startActivity(i);
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                        int s = Integer.parseInt(editText.getText().toString());
+                        if (s == 1) {
+                            Intent intent = new Intent(getApplicationContext(), Modificar.class);
+                            intent.putExtra("ID", "" + personas.get_id());
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            dbHandler.borrarPersona(personas.get_id());
+                        }
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.fabAgregar:
+                startActivity(new Intent(getApplicationContext(), Agregar.class));
+                this.finish();
+                break;
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }

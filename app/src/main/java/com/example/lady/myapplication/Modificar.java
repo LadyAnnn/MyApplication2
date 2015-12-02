@@ -10,11 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.lady.myapplication.entidades.Personas;
 
 /**
  * Created by LADY on 18/11/2015.
  */
-public class Modificar extends Activity{
+public class Modificar extends Activity {
     MyDB dbHandler;
     EditText nombre_input;
     EditText apellido_input;
@@ -22,6 +25,7 @@ public class Modificar extends Activity{
     EditText numero_input;
     EditText correo_input;
     int idglobal;
+    Personas personas = new Personas();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,23 +40,23 @@ public class Modificar extends Activity{
         numero_input = (EditText) findViewById(R.id.numero_input);
         correo_input = (EditText) findViewById(R.id.correo_input);
         dbHandler = new MyDB(this, null, null, 1);
-        Personas personas = new Personas();
-         Intent i = getIntent(); // gets the previously created intent
-        String stringid = i.getStringExtra("id_persona");
+
+        Intent i = getIntent(); // gets the previously created intent
+        String stringid = i.getStringExtra("ID");
         int id = Integer.parseInt(stringid);
-        Cursor c = dbHandler.personabyid(id);
+        personas = dbHandler.personabyid(id);
 
         //Vuelve a rellenar los inputs con los valores del cursor
-        nombre_input.setText(c.getString(c.getColumnIndexOrThrow("nombre")));
-        apellido_input.setText(c.getString(c.getColumnIndexOrThrow("apellido")));
-        direccion_input.setText(c.getString(c.getColumnIndexOrThrow("direccion")));
-        numero_input.setText(c.getString(c.getColumnIndexOrThrow("numero")));
-        correo_input.setText(c.getString(c.getColumnIndexOrThrow("correo")));
-        idglobal = c.getInt(c.getColumnIndexOrThrow("_id"));
+        nombre_input.setText(personas.get_nombre()+"");
+        apellido_input.setText(personas.get_apellido());
+        direccion_input.setText(personas.get_direccion()+"");
+        numero_input.setText(personas.get_numero()+"");
+        correo_input.setText(personas.get_correo()+"");
+        idglobal = personas.get_id();
 
     }
 
-    public void modificar_clicked(View view){
+    public void modificar_clicked(View view) {
 
         Personas persona = new Personas(Integer.parseInt(numero_input.getText().toString()),
                 nombre_input.getText().toString(),
@@ -60,22 +64,34 @@ public class Modificar extends Activity{
                 correo_input.getText().toString(),
                 direccion_input.getText().toString());
         persona.set_id(idglobal);
-        dbHandler.updatepersona(persona);
-        confirmacion();
-        limpiarcampos();
-        finish(); //Termina la actividad y vuelve al menu principal
+
+        if (dbHandler.updatepersona(persona)>0) {
+            Toast.makeText(getApplicationContext(), "Actualizo Correctamente", Toast.LENGTH_SHORT);
+            confirmacion();
+
+        } else {
+            Toast.makeText(getApplicationContext(),"Ocurrio un error",Toast.LENGTH_SHORT);
+            limpiarcampos();
+            this.finish();
+        }
+
+
+
+
 
     }
 
-    public void confirmacion(){
+    public void confirmacion() {
 
-        AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+        AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
         dlgAlert.setMessage("Se ha modificado exitosamente!");
         dlgAlert.setTitle("Agregar Persona");
         dlgAlert.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        //dismiss the dialog
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                        limpiarcampos();
+                        finish();
                     }
                 });
         dlgAlert.setCancelable(true);
@@ -83,7 +99,7 @@ public class Modificar extends Activity{
     }
 
     //Limpia los valores entrados para efectos de estetica
-    public void limpiarcampos(){
+    public void limpiarcampos() {
 
         nombre_input.setText("");
         apellido_input.setText("");

@@ -1,4 +1,4 @@
-package com.example.lady.myapplication;
+package com.example.lady.myapplication.entidades;
 
 /**
  * Created by LADY on 18/11/2015.
@@ -20,6 +20,14 @@ public void agregar(String nombre, String direccion,  String apellido, int numer
     this._numero = numero;
     this._correo = correo;
 }
+    public void agregarWithId(int id,String nombre, String direccion,  String apellido, int numero, String correo ){
+        this._id = id;
+        this._nombre = nombre;
+        this._direccion = direccion;
+        this._apellido = apellido;
+        this._numero = numero;
+        this._correo = correo;
+    }
 
     public Personas(int i, String s, String s1, String s2, String s3) {
 

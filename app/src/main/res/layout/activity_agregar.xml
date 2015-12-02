@@ -50,7 +50,7 @@
         <EditText
             android:layout_width="267dp"
             android:layout_height="wrap_content"
-            android:id="@+id/editText"
+            android:id="@+id/nombrea"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
@@ -72,7 +72,7 @@
         <EditText
             android:layout_width="259dp"
             android:layout_height="wrap_content"
-            android:id="@+id/editText2"
+            android:id="@+id/apellidoa"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
@@ -96,7 +96,7 @@
         <EditText
             android:layout_width="261dp"
             android:layout_height="wrap_content"
-            android:id="@+id/editText3"
+            android:id="@+id/correoa"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
@@ -119,7 +119,7 @@
         <EditText
             android:layout_width="272dp"
             android:layout_height="wrap_content"
-            android:id="@+id/editText4"
+            android:id="@+id/direcciona"
             android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
@@ -127,9 +127,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Agregar"
-        android:id="@+id/button3"
+        android:id="@+id/btnAgregar"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.04"
-        android:onClick="agregar_clicked" />
+        android:layout_weight="0.04" />
 
 </LinearLayout>
