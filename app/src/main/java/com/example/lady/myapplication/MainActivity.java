@@ -108,6 +108,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                             finish();
                         } else {
                             dbHandler.borrarPersona(personas.get_id());
+                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
                         }
                     }
                 })
